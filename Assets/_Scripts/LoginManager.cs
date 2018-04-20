@@ -23,6 +23,7 @@ public class LoginManager : MonoBehaviour {
         
         if (ssdk.IsAuthorized(PlatformType.SinaWeibo))
         {
+            Utility.WriteFile(Application.persistentDataPath, "AuthInfo.dat", ssdk.GetAuthInfo(PlatformType.SinaWeibo).toJson());
             UnityEngine.SceneManagement.SceneManager.LoadScene(2);
         }
         else
@@ -35,15 +36,20 @@ public class LoginManager : MonoBehaviour {
     {
         if (state == ResponseState.Success)
         {
-
+            ssdk.GetAuthInfo(type);
+            Utility.WriteFile(Application.persistentDataPath, "AuthResult.dat", data.toJson());
+            
+            Utility.WriteFile(Application.persistentDataPath, "AuthInfo.dat", ssdk.GetAuthInfo(PlatformType.SinaWeibo).toJson());
+            UnityEngine.SceneManagement.SceneManager.LoadScene(2); 
         }
         else if (state == ResponseState.Fail)
         {
-
+            ssdk.CancelAuthorize(type);
+            
         }
         else if (state == ResponseState.Cancel)
         {
-
+            ssdk.CancelAuthorize(type);
         }
     }
 }
