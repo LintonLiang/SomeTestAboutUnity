@@ -42,4 +42,13 @@ public static class Utility {
         }
         return readInfo;
     }
+    public static void MakeToast(string info)
+    {
+        AndroidJavaObject currentActivity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+        AndroidJavaClass Toast = new AndroidJavaClass("android.widget.Toast");
+        currentActivity.Call("runOnThread", new AndroidJavaRunnable(() =>
+        {
+            Toast.CallStatic<AndroidJavaObject>("makeText", currentActivity, info, Toast.GetStatic<int>("LENGTH_LONG")).Call("show");
+        }));
+    }
 }

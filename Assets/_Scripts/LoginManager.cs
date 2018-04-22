@@ -24,6 +24,7 @@ public class LoginManager : MonoBehaviour {
         if (ssdk.IsAuthorized(PlatformType.SinaWeibo))
         {
             Utility.WriteFile(Application.persistentDataPath, "AuthInfo.dat", ssdk.GetAuthInfo(PlatformType.SinaWeibo).toJson());
+            //Utility.MakeToast("微博用户：" + ssdk.GetAuthInfo(PlatformType.SinaWeibo)["userName"] + "登陆成功！");
             UnityEngine.SceneManagement.SceneManager.LoadScene(2);
         }
         else
@@ -36,20 +37,24 @@ public class LoginManager : MonoBehaviour {
     {
         if (state == ResponseState.Success)
         {
+            Debug.Log("授权成功！");
             ssdk.GetAuthInfo(type);
             Utility.WriteFile(Application.persistentDataPath, "AuthResult.dat", data.toJson());
             
             Utility.WriteFile(Application.persistentDataPath, "AuthInfo.dat", ssdk.GetAuthInfo(PlatformType.SinaWeibo).toJson());
+            //Utility.MakeToast("微博用户："+ ssdk.GetAuthInfo(PlatformType.SinaWeibo)["userName"]+"登陆成功！");
             UnityEngine.SceneManagement.SceneManager.LoadScene(2); 
         }
         else if (state == ResponseState.Fail)
         {
             ssdk.CancelAuthorize(type);
-            
+            //Utility.MakeToast("登陆失败！");
+
         }
         else if (state == ResponseState.Cancel)
         {
             ssdk.CancelAuthorize(type);
+            //Utility.MakeToast("登录被取消！");
         }
     }
 }

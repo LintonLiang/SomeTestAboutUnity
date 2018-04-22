@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubUnityProgram.Plugins", "GithubUnityProgram.Plugins.csproj", "{CEA3AF5F-AF6D-E12A-1E75-BBBEAD527E98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubUnityProgram", "GithubUnityProgram.csproj", "{3895046F-76D6-9499-C71F-D1D2EF6822EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubUnityProgram.Editor.Plugins", "GithubUnityProgram.Editor.Plugins.csproj", "{BE5759C4-7F71-3AD2-0D29-B6C6732153F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEA3AF5F-AF6D-E12A-1E75-BBBEAD527E98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA3AF5F-AF6D-E12A-1E75-BBBEAD527E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA3AF5F-AF6D-E12A-1E75-BBBEAD527E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA3AF5F-AF6D-E12A-1E75-BBBEAD527E98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3895046F-76D6-9499-C71F-D1D2EF6822EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3895046F-76D6-9499-C71F-D1D2EF6822EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3895046F-76D6-9499-C71F-D1D2EF6822EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3895046F-76D6-9499-C71F-D1D2EF6822EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5759C4-7F71-3AD2-0D29-B6C6732153F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5759C4-7F71-3AD2-0D29-B6C6732153F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5759C4-7F71-3AD2-0D29-B6C6732153F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5759C4-7F71-3AD2-0D29-B6C6732153F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
