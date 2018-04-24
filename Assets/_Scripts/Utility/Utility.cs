@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public static class Utility {
@@ -46,9 +48,18 @@ public static class Utility {
     {
         AndroidJavaObject currentActivity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass Toast = new AndroidJavaClass("android.widget.Toast");
-        currentActivity.Call("runOnThread", new AndroidJavaRunnable(() =>
+        currentActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
         {
             Toast.CallStatic<AndroidJavaObject>("makeText", currentActivity, info, Toast.GetStatic<int>("LENGTH_LONG")).Call("show");
         }));
+    }
+
+    public static string UnicodeToString(string unicode)
+    {
+        Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");
+        return reg.Replace(unicode, delegate (Match m)
+        {
+            return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString();
+        });
     }
 }

@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 1136051981}
   - component: {fileID: 1136051980}
   - component: {fileID: 1136051982}
+  - component: {fileID: 1136051983}
   m_Layer: 0
   m_Name: ShareSDKManager
   m_TagString: Untagged
@@ -141,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae4e51a18be67c4ca73bc3a447b856a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reqID: 0
   appKey: 25510aaf268e3
   appSecret: 34120cf93109bcc76ec1c553337eda4c
   devInfo:
@@ -374,4 +376,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93f3b8fdda66484ab703dac6a9e5108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userPlat: 0
+  userID: 
   ssdk: {fileID: 1136051980}
+  smssdk: {fileID: 0}
+--- !u!114 &1136051983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1136051979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6295cb86122b24f55b2187085a6d693b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appKey: 25510aaf268e3
+  appSerect: 34120cf93109bcc76ec1c553337eda4c
+  isWarn: 1

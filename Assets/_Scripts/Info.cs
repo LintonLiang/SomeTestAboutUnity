@@ -1,4 +1,4 @@
-﻿using cn.sharesdk.unity3d;
+using cn.sharesdk.unity3d;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,11 +15,20 @@ public class Info : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         ssdk = ShareSDKManager.Instance.ssdk;
-        Hashtable authInfo = Utility.ReadFile(Application.persistentDataPath, "AuthInfo.dat").hashtableFromJson();
+        ssdk.showUserHandler = OnGetUserInfoResultHandler;
 
-        StartCoroutine(LoadUserIcon(authInfo["userIcon"].ToString()));
-        userID.text = authInfo["userID"].ToString();
-        userName.text = authInfo["userName"].ToString();
+        if (ShareSDKManager.Instance.userPlat ==PlatformType.SinaWeibo)
+        {
+            Hashtable authInfo = Utility.ReadFile(Application.persistentDataPath, "AuthInfo.dat").hashtableFromJson();
+
+            StartCoroutine(LoadUserIcon(authInfo["userIcon"].ToString()));
+            userID.text = authInfo["userID"].ToString();
+            userName.text = authInfo["userName"].ToString();
+        }
+        if (ShareSDKManager.Instance.userPlat ==PlatformType.SMS)
+        {
+            userName.text = ShareSDKManager.Instance.userID;
+        }
 
         
 
@@ -42,5 +51,50 @@ public class Info : MonoBehaviour {
         }
     }
     
+    public void OnEnterButtonClick()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+    }
+    public void OnDetailButtonClick()
+    {
+        if (ShareSDKManager.Instance.userPlat == PlatformType.SinaWeibo)
+        {
+            ssdk.GetUserInfo(PlatformType.SinaWeibo);
+        }
+        if (ShareSDKManager.Instance.userPlat == PlatformType.SMS)
+        {
+            Utility.MakeToast("手机注册用户无法完成此操作");
+        }
+        
+    }
+    public void OnSignOutButtonClick()
+    {
+        if (ShareSDKManager.Instance.userPlat == PlatformType.SinaWeibo)
+        {
+            ssdk.CancelAuthorize(PlatformType.SinaWeibo);
+        }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+    }
 
+    void OnGetUserInfoResultHandler(int reqID, ResponseState state, PlatformType type, Hashtable data)
+    {
+        if (state == ResponseState.Success)
+        {
+            Utility.WriteFile(Application.persistentDataPath, "UserInfo.dat", data.toJson());
+
+            Utility.MakeToast("您的位置：" + Utility.UnicodeToString(data["location"].ToString()));
+        }
+        else if (state == ResponseState.Fail)
+        {
+            ssdk.CancelAuthorize(type);
+            Utility.MakeToast("获取用户详细信息失败！");
+
+        }
+        else if (state == ResponseState.Cancel)
+        {
+            ssdk.CancelAuthorize(type);
+            Utility.MakeToast("获取用户详细信息被取消！");
+        }
+    }
+    
 }

@@ -245,7 +245,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/45037/Desktop/Linton.keystore
+  AndroidKeystoreName: C:/Users/Administrator/Desktop/Linton.keystore
   AndroidKeyaliasName: linton
   AndroidTVCompatibility: 1
   AndroidIsGame: 1

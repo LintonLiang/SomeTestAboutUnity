@@ -1,16 +1,19 @@
 using cn.sharesdk.unity3d;
 using System.Collections;
-using System.Collections.Generic;
+using cn.SMSSDK.Unity;
 using UnityEngine;
 
-public class LoginManager : MonoBehaviour {
+public class LoginManager : MonoBehaviour,SMSSDKHandler {
     ShareSDK ssdk;
+    SMSSDK smssdk;
 	// Use this for initialization
 	void Start () {
         
         ssdk = ShareSDKManager.Instance.ssdk;
-        ssdk.authHandler = OnAuthResultHandler;
+        smssdk = ShareSDKManager.Instance.smssdk;
 
+        ssdk.authHandler = OnAuthResultHandler;
+        smssdk.setHandler(this);
 
     }
 	
@@ -24,7 +27,7 @@ public class LoginManager : MonoBehaviour {
         if (ssdk.IsAuthorized(PlatformType.SinaWeibo))
         {
             Utility.WriteFile(Application.persistentDataPath, "AuthInfo.dat", ssdk.GetAuthInfo(PlatformType.SinaWeibo).toJson());
-            //Utility.MakeToast("Î¢²©ÓÃ»§£º" + ssdk.GetAuthInfo(PlatformType.SinaWeibo)["userName"] + "µÇÂ½³É¹¦£¡");
+            //Utility.MakeToast("å¾®åšç”¨æˆ·ï¼š" + ssdk.GetAuthInfo(PlatformType.SinaWeibo)["userName"] + "ç™»é™†æˆåŠŸï¼");
             UnityEngine.SceneManagement.SceneManager.LoadScene(2);
         }
         else
@@ -32,29 +35,50 @@ public class LoginManager : MonoBehaviour {
             ssdk.Authorize(PlatformType.SinaWeibo);
         }
     }
-
+    public void OnSmsLoginButtonClick()
+    {
+        smssdk.showRegisterPage(CodeType.TextCode);
+    }
     void OnAuthResultHandler(int reqID, ResponseState state, PlatformType type, Hashtable data)
     {
         if (state == ResponseState.Success)
         {
-            Debug.Log("ÊÚÈ¨³É¹¦£¡");
+            Debug.Log("æˆæƒæˆåŠŸï¼");
             ssdk.GetAuthInfo(type);
             Utility.WriteFile(Application.persistentDataPath, "AuthResult.dat", data.toJson());
             
             Utility.WriteFile(Application.persistentDataPath, "AuthInfo.dat", ssdk.GetAuthInfo(PlatformType.SinaWeibo).toJson());
-            //Utility.MakeToast("Î¢²©ÓÃ»§£º"+ ssdk.GetAuthInfo(PlatformType.SinaWeibo)["userName"]+"µÇÂ½³É¹¦£¡");
+            ShareSDKManager.Instance.userPlat = PlatformType.SinaWeibo;
+            //ShareSDKManager.Instance.userID = ssdk.GetAuthInfo(PlatformType.SinaWeibo)["userID"].ToString();
+            Utility.MakeToast("å¾®åšç”¨æˆ·ï¼š"+ ssdk.GetAuthInfo(PlatformType.SinaWeibo)["userName"]+"ç™»é™†æˆåŠŸï¼");
             UnityEngine.SceneManagement.SceneManager.LoadScene(2); 
         }
         else if (state == ResponseState.Fail)
         {
             ssdk.CancelAuthorize(type);
-            //Utility.MakeToast("µÇÂ½Ê§°Ü£¡");
+            Utility.MakeToast("ç™»é™†å¤±è´¥ï¼");
 
         }
         else if (state == ResponseState.Cancel)
         {
             ssdk.CancelAuthorize(type);
-            //Utility.MakeToast("µÇÂ¼±»È¡Ïû£¡");
+            Utility.MakeToast("ç™»å½•è¢«å–æ¶ˆï¼");
         }
+    }
+
+    public void onComplete(int action, object resp)
+    {
+        ActionType act = (ActionType)action;
+        if (act == ActionType.CommitCode)
+        {
+            ShareSDKManager.Instance.userPlat = PlatformType.SMS;
+            ShareSDKManager.Instance.userID = ((string)resp).hashtableFromJson()["phone"].ToString();
+            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+        }
+    }
+
+    public void onError(int action, object resp)
+    {
+        Utility.MakeToast("çŸ­ä¿¡ç™»å½•å¤±è´¥");
     }
 }
