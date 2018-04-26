@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 
 public static class Utility {
-
+    #region 写入文本文件
     public static void WriteFile(string path ,string name, string info)
     {
         //StreamWriter sw;
@@ -23,6 +23,8 @@ public static class Utility {
         }
 
     }
+    #endregion
+    #region 读取文本文件
     public static string ReadFile(string path, string name)
     {
         string readInfo = "";
@@ -44,6 +46,8 @@ public static class Utility {
         }
         return readInfo;
     }
+    #endregion
+    #region 在安卓端显示吐司提示
     public static void MakeToast(string info)
     {
         AndroidJavaObject currentActivity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
@@ -53,7 +57,8 @@ public static class Utility {
             Toast.CallStatic<AndroidJavaObject>("makeText", currentActivity, info, Toast.GetStatic<int>("LENGTH_LONG")).Call("show");
         }));
     }
-
+    #endregion
+    #region 将Unicode转换成string格式
     public static string UnicodeToString(string unicode)
     {
         Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");
@@ -62,4 +67,5 @@ public static class Utility {
             return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString();
         });
     }
+    #endregion
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using cn.SMSSDK.Unity;
 using UnityEngine;
 
-public class LoginManager : MonoBehaviour,SMSSDKHandler {
+public class Login : MonoBehaviour,SMSSDKHandler {
     ShareSDK ssdk;
     SMSSDK smssdk;
 	// Use this for initialization
@@ -27,12 +27,14 @@ public class LoginManager : MonoBehaviour,SMSSDKHandler {
         if (ssdk.IsAuthorized(PlatformType.SinaWeibo))
         {
             Utility.WriteFile(Application.persistentDataPath, "AuthInfo.dat", ssdk.GetAuthInfo(PlatformType.SinaWeibo).toJson());
-            //Utility.MakeToast("微博用户：" + ssdk.GetAuthInfo(PlatformType.SinaWeibo)["userName"] + "登陆成功！");
+            Utility.MakeToast("微博用户：" + ssdk.GetAuthInfo(PlatformType.SinaWeibo)["userName"] + "登陆成功！");
+            ShareSDKManager.Instance.userPlat = PlatformType.SinaWeibo;
             UnityEngine.SceneManagement.SceneManager.LoadScene(2);
         }
         else
         {
             ssdk.Authorize(PlatformType.SinaWeibo);
+
         }
     }
     public void OnSmsLoginButtonClick()
