@@ -137,10 +137,10 @@ public class UIManager {
     /// <summary>
     /// just for test
     /// </summary>
-    public void Test()
-    {
-        string path ;
-        panelPathDict.TryGetValue(UIPanelType.Knapsack,out path);
-        Debug.Log(path);
-    }
+    //public void Test()
+    //{
+    //    string path ;
+    //    panelPathDict.TryGetValue(UIPanelType.Knapsack,out path);
+    //    Debug.Log(path);
+    //}
 }

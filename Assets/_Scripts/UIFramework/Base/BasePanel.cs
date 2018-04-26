@@ -1,13 +1,23 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BasePanel : MonoBehaviour {
+
+    private CanvasGroup canvasGroup;
+
+    void Start()
+    {
+        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
+    }
     /// <summary>
     /// 界面被显示出来
     /// </summary>
     public virtual void OnEnter()
     {
-
+        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 1;
+        canvasGroup.blocksRaycasts = true;
+        gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -15,7 +25,7 @@ public class BasePanel : MonoBehaviour {
     /// </summary>
     public virtual void OnPause()
     {
-
+        canvasGroup.blocksRaycasts = false;
     }
 
     /// <summary>
@@ -23,7 +33,7 @@ public class BasePanel : MonoBehaviour {
     /// </summary>
     public virtual void OnResume()
     {
-
+        canvasGroup.blocksRaycasts = true;
     }
 
     /// <summary>
@@ -31,6 +41,10 @@ public class BasePanel : MonoBehaviour {
     /// </summary>
     public virtual void OnExit()
     {
-
+        gameObject.SetActive(false);
+    }
+    public void OnClosePanel()
+    {
+        UIManager.Instance.PopPanel();
     }
 }
