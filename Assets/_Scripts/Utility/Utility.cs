@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 
 public static class Utility {
+    
     #region 写入文本文件
     public static void WriteFile(string path ,string name, string info)
     {
